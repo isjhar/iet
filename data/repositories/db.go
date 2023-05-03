@@ -17,13 +17,7 @@ const databaseDefault = "database"
 
 func init() {
 	var err error
-	dataSourceName := fmt.Sprintf("server=%s; port=%s; user id=%s; password=%s; database=%s;",
-		utils.GetEnvironmentVariable("DB_HOST", hostDefault),
-		utils.GetEnvironmentVariable("DB_PORT", portDefault),
-		utils.GetEnvironmentVariable("DB_USER", userDefault),
-		utils.GetEnvironmentVariable("DB_PASSWORD", passwordDefault),
-		utils.GetEnvironmentVariable("DB_NAME", databaseDefault),
-	)
+	dataSourceName := GetDataSourceName()
 
 	DB, err = sql.Open("sqlserver", dataSourceName)
 	if err != nil {
@@ -33,4 +27,14 @@ func init() {
 	if err = DB.Ping(); err != nil {
 		log.Panicf("error %v \n", err)
 	}
+}
+
+func GetDataSourceName() string {
+	return fmt.Sprintf("server=%s; port=%s; user id=%s; password=%s; database=%s;",
+		utils.GetEnvironmentVariable("DB_HOST", hostDefault),
+		utils.GetEnvironmentVariable("DB_PORT", portDefault),
+		utils.GetEnvironmentVariable("DB_USER", userDefault),
+		utils.GetEnvironmentVariable("DB_PASSWORD", passwordDefault),
+		utils.GetEnvironmentVariable("DB_NAME", databaseDefault),
+	)
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"isjhar/template/echo-golang/data/repositories"
 	"log"
 
 	"github.com/golang-migrate/migrate/v4"
@@ -10,7 +11,7 @@ import (
 func main() {
 	m, err := migrate.New(
 		"github://mattes:personal-access-token@mattes/migrate_test",
-		"postgres://localhost:5432/database?sslmode=enable")
+		repositories.GetDataSourceName())
 	if err != nil {
 		log.Panic(err)
 	}
