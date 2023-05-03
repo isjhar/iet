@@ -1,12 +1,16 @@
 package repositories
 
 import (
+	"isjhar/template/echo-golang/utils"
+
 	"github.com/golang-migrate/migrate/v4"
 )
 
+const migrationPath = ""
+
 func Migrate() error {
 	m, err := migrate.New(
-		"github://mattes:personal-access-token@mattes/migrate_test",
+		utils.GetEnvironmentVariable("MIGRATION_PATH", migrationPath),
 		GetDataSourceName())
 	if err != nil {
 		return err

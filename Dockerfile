@@ -11,6 +11,7 @@ ENV DB_NAME=
 ENV JWT_LIFE_TIME=
 ENV JWT_SECRET=
 ENV ENVIRONMENT=
+ENV MIGRATION_PATH=
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN date
