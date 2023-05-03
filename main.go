@@ -1,8 +1,8 @@
 package main
 
 import (
-	"isjhar/template/echo-golang/models"
 	"isjhar/template/echo-golang/utils"
+	"isjhar/template/echo-golang/view/entities"
 	"net/http"
 
 	"github.com/go-playground/validator"
@@ -53,7 +53,7 @@ func main() {
 }
 
 func health(c echo.Context) error {
-	return c.JSON(http.StatusOK, models.ApiResponse{
+	return c.JSON(http.StatusOK, entities.ApiResponse{
 		Message: "still alive",
 		Data:    nil,
 	})
