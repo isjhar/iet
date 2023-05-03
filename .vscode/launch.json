@@ -10,6 +10,13 @@
             "request": "launch",
             "mode": "debug",
             "program": "${workspaceFolder}/main.go"
+        },
+        {
+            "name": "Launch Migration",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/migrations/main.go"
         }
     ]
 }
