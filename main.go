@@ -2,8 +2,7 @@ package main
 
 import (
 	"isjhar/template/echo-golang/utils"
-	"isjhar/template/echo-golang/view/entities"
-	"net/http"
+	"isjhar/template/echo-golang/view/routers"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -36,25 +35,7 @@ func main() {
 	}
 	e.Use(middleware.CORSWithConfig(CORSConfig))
 
-	e.Static("/docs", "docs")
-
-	public := e.Group("")
-
-	public.GET("/health", health)
-	public.OPTIONS("/health", health)
-
-	private := e.Group("")
-	private.Use(middleware.JWTWithConfig(middleware.JWTConfig{
-		SigningKey:    []byte(utils.GetJwtSecret()),
-		SigningMethod: "HS512",
-	}))
+	routers.Route(e)
 
 	e.Logger.Fatal(e.Start(":1323"))
-}
-
-func health(c echo.Context) error {
-	return c.JSON(http.StatusOK, entities.ApiResponse{
-		Message: "still alive",
-		Data:    nil,
-	})
 }
