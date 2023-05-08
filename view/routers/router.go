@@ -2,6 +2,7 @@ package routers
 
 import (
 	"isjhar/template/echo-golang/utils"
+	"isjhar/template/echo-golang/view"
 	"isjhar/template/echo-golang/view/dto"
 	"net/http"
 
@@ -21,6 +22,7 @@ func Route(e *echo.Echo) {
 		SigningKey:    []byte(utils.GetJwtSecret()),
 		SigningMethod: "HS512",
 	}))
+	private.Use(view.AuthorizedUser("header"))
 }
 
 func health(c echo.Context) error {

@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"isjhar/template/echo-golang/domain/entities"
 	"strconv"
 	"time"
 
@@ -36,4 +37,28 @@ func GetJwtExp() int64 {
 
 func GetJwtSecret() string {
 	return GetEnvironmentVariable("JWT_SECRET", jwtSecretDefault)
+}
+
+func GetClaims(token string) (jwt.MapClaims, error) {
+	claims := jwt.MapClaims{}
+	_, err := jwt.ParseWithClaims(token, claims, func(token *jwt.Token) (interface{}, error) {
+		return []byte(GetJwtSecret()), nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return claims, nil
+}
+
+func GetUser(token string) (interface{}, error) {
+	claims, err := GetClaims(token)
+	if err != nil {
+		return nil, err
+	}
+	user, ok := claims["user"]
+	// If the key exists
+	if ok {
+		return nil, entities.EntityNotFound
+	}
+	return user, nil
 }
