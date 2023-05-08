@@ -8,7 +8,7 @@ import (
 )
 
 const jwtSecretDefault string = "JWT-SECRET"
-const jwtLifeTimeDefault int64 = 30
+const jwtLifeTimeDefault int64 = 30 // minute
 
 func GenerateJWT(user interface{}) (string, error) {
 	plainToken := jwt.New(jwt.SigningMethodHS512)
