@@ -57,7 +57,7 @@ func GetUser(token string) (interface{}, error) {
 	}
 	user, ok := claims["user"]
 	// If the key exists
-	if ok {
+	if !ok {
 		return nil, entities.EntityNotFound
 	}
 	return user, nil
