@@ -6,6 +6,8 @@ import (
 	"isjhar/template/echo-golang/utils"
 	"log"
 	"strings"
+
+	"gopkg.in/guregu/null.v4"
 )
 
 var DB *sql.DB
@@ -40,8 +42,8 @@ func GetDataSourceName() string {
 	)
 }
 
-func GetOrderQuery(order string) string {
-	if strings.ToLower(order) == "desc" {
+func GetOrderQuery(order null.String) string {
+	if strings.ToLower(order.String) == "desc" {
 		return "desc"
 	}
 	return "asc"
