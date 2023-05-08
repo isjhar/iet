@@ -13,9 +13,9 @@ type Repository interface {
 }
 
 type GetParams struct {
-	Limit  int
-	Offset int
-	Sort   string
-	Order  string
+	Limit  null.Int
+	Offset null.Int
+	Sort   null.String
+	Order  null.String
 	Search null.String
 }
