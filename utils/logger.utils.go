@@ -22,7 +22,7 @@ func (i *CustomLogger) Write(p []byte) (int, error) {
 
 func (i *CustomLogger) GetFile() (*os.File, error) {
 	currentDate := time.Now()
-	currentFilename := fmt.Sprintf("logs/%s", currentDate.Format("2006-02-01.txt"))
+	currentFilename := fmt.Sprintf("logs/%s", currentDate.Format("2006-01-02.txt"))
 	if file == nil {
 		return os.OpenFile(currentFilename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	}
