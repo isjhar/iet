@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"isjhar/template/echo-golang/utils"
 	"log"
+	"strings"
 )
 
 var DB *sql.DB
@@ -37,4 +38,11 @@ func GetDataSourceName() string {
 		utils.GetEnvironmentVariable("DB_PASSWORD", passwordDefault),
 		utils.GetEnvironmentVariable("DB_NAME", databaseDefault),
 	)
+}
+
+func GetOrderQuery(order string) string {
+	if strings.ToLower(order) == "desc" {
+		return "desc"
+	}
+	return "asc"
 }
