@@ -21,8 +21,9 @@ func TestAuthorizedUser(t *testing.T) {
 		return c.String(http.StatusOK, "test")
 	})
 	userPayload := make(map[string]interface{})
-	userPayload["id"] = 1
+	userPayload["id"] = int64(1)
 	userPayload["username"] = "admin"
+	userPayload["name"] = "admin"
 	token, err := utils.GenerateJWT(userPayload)
 	if err != nil {
 		t.Fatal(err)
