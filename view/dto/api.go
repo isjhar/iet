@@ -7,14 +7,19 @@ type ApiResponse struct {
 	Data    interface{} `json:"data"`
 }
 
-type GetRequestParams struct {
+type GetParams struct {
 	Sort   null.String `query:"sort"`
 	Order  null.String `query:"order"`
 	Limit  null.Int    `query:"limit"`
 	Offset null.Int    `query:"offset"`
+	CountParams
+}
+
+type CountParams struct {
 	Search null.String `query:"search"`
 }
 
-type GetResponseData struct {
-	Total int64 `json:"total"`
+type GetData struct {
+	Data  interface{} `json:"data"`
+	Total int64       `json:"total"`
 }

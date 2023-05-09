@@ -17,5 +17,9 @@ type GetParams struct {
 	Offset null.Int
 	Sort   null.String
 	Order  null.String
+	CountParams
+}
+
+type CountParams struct {
 	Search null.String
 }
