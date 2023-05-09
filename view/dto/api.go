@@ -19,6 +19,10 @@ type CountParams struct {
 	Search null.String `query:"search"`
 }
 
+type FindParams struct {
+	ID int64 `param:"id"`
+}
+
 type GetData struct {
 	Data  interface{} `json:"data"`
 	Total int64       `json:"total"`
