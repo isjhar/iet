@@ -1,7 +1,17 @@
 package entities
 
-import "errors"
+type ServiceError struct {
+	Message string
+}
 
-var InternalServerError = errors.New("Internal server error")
-var EntityNotFound = errors.New("Entity not found")
-var WrongPassword = errors.New("Wrong password")
+func (e *ServiceError) Error() string {
+	return e.Message
+}
+
+func NewServerError(message string) error {
+	return &ServiceError{Message: message}
+}
+
+var InternalServerError = NewServerError("Internal server error")
+var EntityNotFound = NewServerError("Entity not found")
+var WrongPassword = NewServerError("Wrong password")
