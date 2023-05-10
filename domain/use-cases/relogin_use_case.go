@@ -5,12 +5,12 @@ import (
 	"isjhar/template/echo-golang/domain/repositories"
 )
 
-type RefreshTokenUseCase struct {
+type ReloginUseCase struct {
 	UserRepository repositories.UserRepository
 	JwtRepository  repositories.JwtRepository
 }
 
-func (r *RefreshTokenUseCase) Execute(ctx context.Context, refreshToken string) (LoginJwtUseCaseResult, error) {
+func (r *ReloginUseCase) Execute(ctx context.Context, refreshToken string) (LoginJwtUseCaseResult, error) {
 	var result LoginJwtUseCaseResult
 	refereshTokenData, err := r.JwtRepository.GetData(refreshToken)
 	if err != nil {
