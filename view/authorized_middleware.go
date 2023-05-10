@@ -2,12 +2,11 @@ package view
 
 import (
 	"isjhar/template/echo-golang/domain/entities"
-	"isjhar/template/echo-golang/utils"
+	usecases "isjhar/template/echo-golang/domain/use-cases"
 	"net/http"
 	"strings"
 
 	"github.com/labstack/echo/v4"
-	"gopkg.in/guregu/null.v4"
 )
 
 type AuthorizedContext struct {
@@ -33,16 +32,12 @@ func AuthorizedUser(tokenLookup string) echo.MiddlewareFunc {
 				Context: c,
 			}
 			token := authorizedContext.GetToken(tokenLookup)
-			raw, err := utils.GetUser(token)
+			getTokenUserUseCase := usecases.GetTokenUserUseCase{}
+			user, err := getTokenUserUseCase.Execute(c.Request().Context(), token)
 			if err != nil {
 				return c.JSON(http.StatusUnauthorized, nil)
 			}
-			userRaw := raw.(map[string]interface{})
-			authorizedContext.User = entities.User{
-				ID:       int64(userRaw["id"].(float64)),
-				Username: userRaw["username"].(string),
-				Name:     null.StringFrom(userRaw["name"].(string)),
-			}
+			authorizedContext.User = user
 			return next(authorizedContext)
 		}
 	}

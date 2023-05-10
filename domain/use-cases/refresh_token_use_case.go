@@ -5,30 +5,19 @@ import (
 	"isjhar/template/echo-golang/domain/repositories"
 )
 
-type LoginJwtUseCase struct {
+type RefreshTokenUseCase struct {
 	UserRepository repositories.UserRepository
 	JwtRepository  repositories.JwtRepository
 }
 
-type LoginJwtUseCaseParams struct {
-	Username string
-	Password string
-}
-
-type LoginJwtUseCaseResult struct {
-	AccessToken  string
-	RefreshToken string
-}
-
-func (r *LoginJwtUseCase) Execute(ctx context.Context, arg LoginJwtUseCaseParams) (LoginJwtUseCaseResult, error) {
+func (r *RefreshTokenUseCase) Execute(ctx context.Context, refreshToken string) (LoginJwtUseCaseResult, error) {
 	var result LoginJwtUseCaseResult
-	loginUseCase := LoginUseCase{
-		UserRepository: r.UserRepository,
+	refereshTokenData, err := r.JwtRepository.GetData(refreshToken)
+	if err != nil {
+		return result, err
 	}
-	user, err := loginUseCase.Execute(ctx, LoginParams{
-		Username: arg.Username,
-		Password: arg.Password,
-	})
+	username := refereshTokenData.(string)
+	user, err := r.UserRepository.Find(ctx, username)
 	if err != nil {
 		return result, err
 	}

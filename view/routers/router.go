@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"isjhar/template/echo-golang/utils"
+	"isjhar/template/echo-golang/data/repositories"
 	"isjhar/template/echo-golang/view"
 	"isjhar/template/echo-golang/view/dto"
 	"net/http"
@@ -17,9 +17,11 @@ func Route(e *echo.Echo) {
 
 	AuthRouter(public)
 
+	jwtRepository := repositories.JwtRepository{}
+
 	private := e.Group("")
 	private.Use(middleware.JWTWithConfig(middleware.JWTConfig{
-		SigningKey:    []byte(utils.GetJwtSecret()),
+		SigningKey:    []byte(jwtRepository.GetJwtSecret()),
 		SigningMethod: "HS512",
 	}))
 	private.Use(view.AuthorizedUser("header"))
