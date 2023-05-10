@@ -3,6 +3,7 @@ package repositories
 import (
 	"isjhar/template/echo-golang/domain/entities"
 	"isjhar/template/echo-golang/utils"
+	"log"
 	"strconv"
 	"time"
 
@@ -24,7 +25,8 @@ func (r JwtRepository) GenerateToken(data interface{}) (string, error) {
 
 	securedToken, err := plainToken.SignedString([]byte(r.GetJwtSecret()))
 	if err != nil {
-		return "", err
+		log.Printf("error sign token: %v", err)
+		return "", entities.InternalServerError
 	}
 
 	return securedToken, nil
@@ -49,7 +51,8 @@ func (r JwtRepository) getClaims(token string) (jwt.MapClaims, error) {
 		return []byte(r.GetJwtSecret()), nil
 	})
 	if err != nil {
-		return nil, err
+		log.Printf("error validate token: %v", err)
+		return nil, entities.InternalServerError
 	}
 	return claims, nil
 }
