@@ -1,6 +1,7 @@
 package view
 
 import (
+	"isjhar/template/echo-golang/data/repositories"
 	"isjhar/template/echo-golang/domain/entities"
 	usecases "isjhar/template/echo-golang/domain/use-cases"
 	"net/http"
@@ -32,7 +33,9 @@ func AuthorizedUser(tokenLookup string) echo.MiddlewareFunc {
 				Context: c,
 			}
 			token := authorizedContext.GetToken(tokenLookup)
-			getTokenUserUseCase := usecases.GetTokenUserUseCase{}
+			getTokenUserUseCase := usecases.GetTokenUserUseCase{
+				JwtRepository: repositories.JwtRepository{},
+			}
 			user, err := getTokenUserUseCase.Execute(c.Request().Context(), token)
 			if err != nil {
 				return c.JSON(http.StatusUnauthorized, nil)
