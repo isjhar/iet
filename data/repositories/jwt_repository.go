@@ -4,24 +4,25 @@ import (
 	"isjhar/template/echo-golang/domain/entities"
 	"isjhar/template/echo-golang/utils"
 	"log"
-	"strconv"
 	"time"
 
 	"github.com/golang-jwt/jwt"
+	"gopkg.in/guregu/null.v4"
 )
 
 const jwtSecretDefault string = "JWT-SECRET"
-const jwtLifeTimeDefault int64 = 60 // minute
 const dataKey string = "data"
 
 type JwtRepository struct {
 }
 
-func (r JwtRepository) GenerateToken(data interface{}) (string, error) {
+func (r JwtRepository) GenerateToken(data interface{}, expMinutes null.Int) (string, error) {
 	plainToken := jwt.New(jwt.SigningMethodHS512)
 	claims := plainToken.Claims.(jwt.MapClaims)
 	claims[dataKey] = data
-	claims["exp"] = r.getJwtExp()
+	if expMinutes.Valid {
+		claims["exp"] = time.Now().Add(time.Minute * time.Duration(expMinutes.Int64)).Unix()
+	}
 
 	securedToken, err := plainToken.SignedString([]byte(r.GetJwtSecret()))
 	if err != nil {
@@ -55,15 +56,6 @@ func (r JwtRepository) getClaims(token string) (jwt.MapClaims, error) {
 		return nil, entities.InternalServerError
 	}
 	return claims, nil
-}
-
-func (r JwtRepository) getJwtExp() int64 {
-	jwtlifeTimeString := utils.GetEnvironmentVariable("JWT_LIFE_TIME", strconv.Itoa(int(jwtLifeTimeDefault)))
-	jwtLifeTime, err := strconv.Atoi(jwtlifeTimeString)
-	if err != nil {
-		jwtLifeTime = 0
-	}
-	return time.Now().Add(time.Minute * time.Duration(jwtLifeTime)).Unix()
 }
 
 func (r JwtRepository) GetJwtSecret() string {
