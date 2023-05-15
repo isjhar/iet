@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"time"
 )
@@ -17,7 +18,8 @@ func (i *CustomLogger) Write(p []byte) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return file.Write(p)
+	logMultiwriter := io.MultiWriter(os.Stdout, file)
+	return logMultiwriter.Write(p)
 }
 
 func (i *CustomLogger) GetFile() (*os.File, error) {
