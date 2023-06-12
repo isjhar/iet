@@ -25,10 +25,7 @@ func (r *LoginJwtUseCase) Execute(ctx context.Context, arg LoginJwtUseCaseParams
 	loginUseCase := LoginUseCase{
 		UserRepository: r.UserRepository,
 	}
-	user, err := loginUseCase.Execute(ctx, LoginParams{
-		Username: arg.Username,
-		Password: arg.Password,
-	})
+	user, err := loginUseCase.Execute(ctx, LoginParams(arg))
 	if err != nil {
 		return result, err
 	}
