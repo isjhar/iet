@@ -4,6 +4,8 @@ import (
 	"context"
 	"isjhar/template/echo-golang/domain/entities"
 	"isjhar/template/echo-golang/domain/repositories"
+
+	"gopkg.in/guregu/null.v4"
 )
 
 type GeneratePairTokenUseCase struct {
@@ -21,12 +23,12 @@ func (r *GeneratePairTokenUseCase) Execute(ctx context.Context, user entities.Us
 	accessTokenPayload["id"] = user.ID
 	accessTokenPayload["username"] = user.Username
 	accessTokenPayload["name"] = user.Name
-	accessToken, err := r.JwtRepository.GenerateToken(accessTokenPayload)
+	accessToken, err := r.JwtRepository.GenerateToken(accessTokenPayload, null.IntFrom(60))
 	if err != nil {
 		return result, err
 	}
 
-	refresToken, err := r.JwtRepository.GenerateToken(user.Username)
+	refresToken, err := r.JwtRepository.GenerateToken(user.Username, null.NewInt(0, false))
 	if err != nil {
 		return result, err
 	}
