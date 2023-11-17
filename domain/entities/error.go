@@ -1,5 +1,7 @@
 package entities
 
+import "fmt"
+
 type ServiceError struct {
 	Message string
 }
@@ -15,3 +17,8 @@ func NewServerError(message string) error {
 var InternalServerError = NewServerError("Internal server error")
 var EntityNotFound = NewServerError("Entity not found")
 var WrongPassword = NewServerError("Wrong password")
+var InvalidParams = NewServerError("Invalid params")
+
+func FileSizeReachLimit(maxSize int64) error {
+	return NewServerError(fmt.Sprintf("File exceeds limit %d bytes", maxSize))
+}
