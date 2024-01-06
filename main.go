@@ -19,9 +19,11 @@ func main() {
 	e.Use(middleware.Recover())
 
 	environment := utils.GetEnvironment()
+	log.SetFlags(log.LstdFlags | log.Lshortfile | log.Lmsgprefix)
 	if environment != utils.DEVELOPMENT {
 		output := &utils.CustomLogger{}
 		log.SetOutput(output)
+		utils.LogLevel = utils.LogWarningLevel
 	}
 
 	//CORS Config

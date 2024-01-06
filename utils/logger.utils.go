@@ -3,11 +3,18 @@ package utils
 import (
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"time"
 )
 
 var file *os.File
+
+const LogInfoLevel = 1
+const LogWarningLevel = 2
+const LogErrorLevel = 3
+
+var LogLevel = LogInfoLevel
 
 type CustomLogger struct {
 }
@@ -37,4 +44,28 @@ func (i *CustomLogger) GetFile() (*os.File, error) {
 		return os.OpenFile(currentFilename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	}
 	return file, nil
+}
+
+func LogInfo(format string, v ...any) {
+	if LogLevel > LogInfoLevel {
+		return
+	}
+	log.SetPrefix("INFO ")
+	log.Printf(format, v...)
+}
+
+func LogWarning(format string, v ...any) {
+	if LogLevel > LogWarningLevel {
+		return
+	}
+	log.SetPrefix("INFO ")
+	log.Printf(format, v...)
+}
+
+func LogError(format string, v ...any) {
+	if LogLevel > LogErrorLevel {
+		return
+	}
+	log.SetPrefix("INFO ")
+	log.Printf(format, v...)
 }
