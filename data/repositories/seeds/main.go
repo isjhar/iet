@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	err := repositories.MigrateDatabase()
+	err := repositories.MigrateSeed()
 	if err != nil {
 		log.Panic(err)
 	}

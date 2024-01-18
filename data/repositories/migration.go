@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"errors"
+	"fmt"
 	"isjhar/template/echo-golang/utils"
 
 	"github.com/golang-migrate/migrate/v4"
@@ -9,9 +10,17 @@ import (
 
 const migrationPath = ""
 
-func Migrate() error {
+func MigrateDatabase() error {
+	return Migrate(getMigrationPath())
+}
+
+func MigrateSeed() error {
+	return Migrate(getSeedPath())
+}
+
+func Migrate(migrationPath string) error {
 	m, err := migrate.New(
-		utils.GetEnvironmentVariable("MIGRATION_PATH", migrationPath),
+		migrationPath,
 		GetDataSourceName())
 	if err != nil {
 		return err
@@ -32,4 +41,14 @@ func Migrate() error {
 		return err
 	}
 	return nil
+}
+
+func getMigrationPath() string {
+	packagePath := utils.GetEnvironmentVariable("PACKAGE_PATH", packagePath)
+	return fmt.Sprintf("file://%s/data/repositories/migrations", packagePath)
+}
+
+func getSeedPath() string {
+	packagePath := utils.GetEnvironmentVariable("PACKAGE_PATH", packagePath)
+	return fmt.Sprintf("file://%s/data/repositories/seeds", packagePath)
 }
