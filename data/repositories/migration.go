@@ -19,9 +19,7 @@ func MigrateSeed() error {
 }
 
 func Migrate(migrationPath string) error {
-	m, err := migrate.New(
-		migrationPath,
-		GetDataSourceName())
+	m, err := CreateMigrate(migrationPath)
 	if err != nil {
 		return err
 	}
@@ -41,6 +39,56 @@ func Migrate(migrationPath string) error {
 		return err
 	}
 	return nil
+}
+
+func Refresh() error {
+	databaseMigration, err := CreateMigrate(getMigrationPath())
+	if err != nil {
+		return err
+	}
+
+	seedMigration, err := CreateMigrate(getSeedPath())
+	if err != nil {
+		return err
+	}
+
+	version, _, err := seedMigration.Version()
+	if err != nil && !errors.Is(err, migrate.ErrNilVersion) {
+		return err
+	}
+	if version > 0 {
+		err = seedMigration.Down()
+		if err != nil {
+			return err
+		}
+	}
+
+	version, _, err = databaseMigration.Version()
+	if err != nil && !errors.Is(err, migrate.ErrNilVersion) {
+		return err
+	}
+	if version > 0 {
+		err = databaseMigration.Down()
+		if err != nil {
+			return err
+		}
+	}
+
+	err = databaseMigration.Up()
+	if err != nil {
+		return err
+	}
+	err = seedMigration.Up()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func CreateMigrate(migrationPath string) (*migrate.Migrate, error) {
+	return migrate.New(
+		migrationPath,
+		GetDataSourceName())
 }
 
 func getMigrationPath() string {
