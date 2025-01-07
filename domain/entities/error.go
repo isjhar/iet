@@ -18,6 +18,7 @@ var InternalServerError = NewServerError("Internal server error")
 var EntityNotFound = NewServerError("Entity not found")
 var WrongPassword = NewServerError("Wrong password")
 var InvalidParams = NewServerError("Invalid params")
+var Forbidden = NewServerError("Forbidden")
 
 func FileSizeReachLimit(maxSize int64) error {
 	return NewServerError(fmt.Sprintf("File exceeds limit %d bytes", maxSize))
