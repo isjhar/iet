@@ -6,17 +6,14 @@ import (
 	"isjhar/template/echo-golang/utils"
 	"log"
 	"strings"
+	"time"
 
 	"gopkg.in/guregu/null.v4"
+	"gorm.io/gorm"
 )
 
 var DB *sql.DB
-
-const hostDefault = "localhost"
-const portDefault = "1433"
-const userDefault = "sa"
-const passwordDefault = "password"
-const databaseDefault = "database"
+var ORM *gorm.DB
 
 func init() {
 	var err error
@@ -30,6 +27,8 @@ func init() {
 	if err = DB.Ping(); err != nil {
 		log.Panicf("error %v \n", err)
 	}
+
+	// OPEN CONNECTION  HERE
 }
 
 func GetDataSourceName() string {
@@ -47,4 +46,20 @@ func GetOrderQuery(order null.String) string {
 		return "desc"
 	}
 	return "asc"
+}
+
+func ToTsVectorSearchQuery(search null.String) string {
+	if !search.Valid {
+		return ""
+	}
+	return strings.Replace(strings.Trim(search.String, " "), " ", "&", -1) + ":*"
+}
+
+func TimeStampToUTC(timestamp null.Time) null.Time {
+	var result null.Time
+	if timestamp.Valid {
+		timestampTime := timestamp.Time
+		result = null.TimeFrom(time.Date(timestampTime.Year(), timestampTime.Month(), timestampTime.Day(), timestampTime.Hour(), timestampTime.Minute(), timestampTime.Second(), timestampTime.Nanosecond(), time.Local).UTC())
+	}
+	return result
 }
