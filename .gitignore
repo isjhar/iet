@@ -21,3 +21,17 @@
 go.work
 
 logs
+data/repositories/config.go
+*Dockerfile
+!example.Dockerfile
+public
+
+run*.sh
+!run.sh
+!run_database.sh
+
+*-logs/
+build_notes.txt
+
+__debug_bin*
+dist
