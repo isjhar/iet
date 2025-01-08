@@ -1,7 +1,7 @@
 info:
   contact: {}
-  description: Silog API.
-  title: Silog API
+  description: Service API.
+  title: Service API
   version: "1.0"
 paths: {}
 securityDefinitions:
