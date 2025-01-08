@@ -3,6 +3,7 @@ module isjhar/template/echo-golang
 go 1.16
 
 require (
+	github.com/akamensky/argparse v1.4.0
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/golang-jwt/jwt v3.2.2+incompatible
