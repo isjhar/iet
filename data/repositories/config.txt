@@ -11,32 +11,6 @@ const databaseDefault = "postgres"
 // migration
 const packagePath = "/builds/j2277/tms-service" // lokasi folder project. contoh : /home/isjhar/Documents/Quests/Tms/api
 
-const traccarUrlDefault = ""
-const traccarUsernameDefault = ""
-const traccarPasswordDefault = ""
-const traccarGroupID = ""
-
-const redisAddress = ""
-
-// integrasi sig
-const silogWebUrlDefault = ""
-const sigUrlDefault = ""
-const sipUrlDefault = ""
-const sipUrl2Default = ""
-
-// sangu
-const sanguUrlDefault = ""
-const sanguTokenDefault = ""
-
-// sms gateway
-const smsGatewayUrlDefault = ""
-
 const elasticsearchUrl = ""
 const elasticsearchKey = ""
 const elasticsearchCategory = ""
-
-const clientKey = ""
-
-const qrCodeExpiredSeconds = ""
-
-const telegramUrl = ""
