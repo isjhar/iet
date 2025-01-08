@@ -1,57 +1,12 @@
-openapi: 3.0.2
 info:
-  title: API
-  description: Echo golang template
-  version: 1.0.0
-servers:
-  - url: http://localhost:1323
-    description: Development
-tags:
-  - name: Auth
-    description: Everything about auth
-security:
-  - BearerAuth: []
-paths:
-  /auth/login:
-    post:
-      summary: Login
-      tags:
-        - Auth
-      security: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                password:
-                  type: string
-      responses:
-        "200":
-          description: Sukses
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/BasicResponse"
-components: # component here
-  schemas:
-    BasicResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          example: "Sukses"
-    DateTime:
-      type: string
-      example: "2006-01-02T15:04:05Z"
-  responses:
-    InternalServerError:
-      description: Internal Server Error
-  securitySchemes:
-    BearerAuth: # arbitrary name for the security scheme
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+  contact: {}
+  description: Silog API.
+  title: Silog API
+  version: "1.0"
+paths: {}
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
