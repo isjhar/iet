@@ -15,14 +15,14 @@ import (
 	"golang.org/x/time/rate"
 )
 
-// @title           Silog API
+// @title           Service API
 // @version         1.0
-// @description     Silog API.
+// @description     Service API.
 // @securityDefinitions.apikey ApiKeyAuth
 // @in header
 // @name Authorization
 func main() {
-	docs.SwaggerInfo.Title = "Silog API"
+	docs.SwaggerInfo.Title = "Service API"
 	docs.SwaggerInfo.Version = "1.0"
 	docs.SwaggerInfo.Host = utils.GetBaseUrl()
 	docs.SwaggerInfo.Schemes = []string{"https", "http"}
