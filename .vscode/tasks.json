@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Generate Swagger",
+            "command": "/home/isjhar/Programs/Swag/swag",
+            "args": ["init", "--output", "./docs"],
+            "type": "process"
+        },
+    ]
+}
