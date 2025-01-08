@@ -5,14 +5,16 @@ import (
 	"io"
 	"log"
 	"os"
+	"runtime"
+	"strings"
 	"time"
 )
 
 var file *os.File
 
-const LogInfoLevel = 1
-const LogWarningLevel = 2
-const LogErrorLevel = 3
+const LogInfoLevel = "INFO"
+const LogWarningLevel = "WARNING"
+const LogErrorLevel = "ERROR"
 
 var LogLevel = LogInfoLevel
 
@@ -47,25 +49,71 @@ func (i *CustomLogger) GetFile() (*os.File, error) {
 }
 
 func LogInfo(format string, v ...any) {
-	if LogLevel > LogInfoLevel {
+	if LogLevel == LogWarningLevel || LogLevel == LogErrorLevel {
 		return
 	}
-	log.SetPrefix("INFO ")
-	log.Printf(format, v...)
+	logMessagef("INFO", format, v...)
+}
+
+func LogInfoln(v ...any) {
+	if LogLevel == LogWarningLevel || LogLevel == LogErrorLevel {
+		return
+	}
+	logMessageln("INFO", v...)
 }
 
 func LogWarning(format string, v ...any) {
-	if LogLevel > LogWarningLevel {
+	if LogLevel == LogErrorLevel {
 		return
 	}
-	log.SetPrefix("INFO ")
-	log.Printf(format, v...)
+	logMessagef("WARNING", format, v...)
+}
+
+func LogWarningln(v ...any) {
+	if LogLevel == LogErrorLevel {
+		return
+	}
+	logMessageln("WARNING", v...)
 }
 
 func LogError(format string, v ...any) {
-	if LogLevel > LogErrorLevel {
+	logMessagef("ERROR", format, v...)
+}
+
+func logMessagef(level string, format string, v ...any) {
+	message := fmt.Sprintf(format, v...)
+	if strings.Contains(message, "context canceled") {
 		return
 	}
-	log.SetPrefix("INFO ")
-	log.Printf(format, v...)
+	// Get the file and line number
+	_, file, line, ok := runtime.Caller(2) // Caller(2) to get the function that called logMessage
+	if !ok {
+		file = "???"
+		line = 0
+	}
+	message = fmt.Sprintf("%s:%d %s", file, line, message)
+
+	log.SetPrefix(level + " ")
+	log.Println(message)
+}
+
+func logMessageln(level string, v ...any) {
+	message := fmt.Sprint(v...)
+	if strings.Contains(message, "context canceled") {
+		return
+	}
+	// Get the file and line number
+	_, file, line, ok := runtime.Caller(2) // Caller(2) to get the function that called logMessage
+	if !ok {
+		file = "???"
+		line = 0
+	}
+
+	message = fmt.Sprintf("%s:%d %s", file, line, message)
+	log.SetPrefix(level + " ")
+	log.Println(message)
+}
+
+func GetLogLevel() string {
+	return GetEnvironmentVariable("LOG_LEVEL", LogLevel)
 }
