@@ -1,10 +1,11 @@
 package routers
 
 import (
-	"isjhar/template/echo-golang/data/repositories"
-	"isjhar/template/echo-golang/view"
-	"isjhar/template/echo-golang/view/dto"
 	"net/http"
+
+	"github.com/isjhar/iet/data/repositories"
+	"github.com/isjhar/iet/view"
+	"github.com/isjhar/iet/view/dto"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"

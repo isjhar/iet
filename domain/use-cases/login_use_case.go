@@ -2,8 +2,9 @@ package usecases
 
 import (
 	"context"
-	"isjhar/template/echo-golang/domain/entities"
-	"isjhar/template/echo-golang/domain/repositories"
+
+	"github.com/isjhar/iet/domain/entities"
+	"github.com/isjhar/iet/domain/repositories"
 )
 
 type LoginUseCase struct {

@@ -1,6 +1,6 @@
 package usecases
 
-import "isjhar/template/echo-golang/domain/repositories"
+import "github.com/isjhar/iet/domain/repositories"
 
 type TransactionalUseCase struct {
 	Repository repositories.Repository

@@ -3,12 +3,13 @@ package repositories
 import (
 	"errors"
 	"fmt"
-	"isjhar/template/echo-golang/domain/entities"
-	"isjhar/template/echo-golang/utils"
 	"os"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/isjhar/iet/domain/entities"
+	"github.com/isjhar/iet/utils"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/source/file"

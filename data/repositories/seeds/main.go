@@ -1,8 +1,9 @@
 package main
 
 import (
-	"isjhar/template/echo-golang/data/repositories"
 	"log"
+
+	"github.com/isjhar/iet/data/repositories"
 
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )

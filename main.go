@@ -1,13 +1,14 @@
 package main
 
 import (
-	"isjhar/template/echo-golang/data/repositories"
-	"isjhar/template/echo-golang/docs"
-	"isjhar/template/echo-golang/utils"
-	"isjhar/template/echo-golang/view"
-	"isjhar/template/echo-golang/view/routers"
 	"log"
 	"time"
+
+	"github.com/isjhar/iet/data/repositories"
+	"github.com/isjhar/iet/docs"
+	"github.com/isjhar/iet/utils"
+	"github.com/isjhar/iet/view"
+	"github.com/isjhar/iet/view/routers"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"

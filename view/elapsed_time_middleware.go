@@ -1,9 +1,10 @@
 package view
 
 import (
-	"isjhar/template/echo-golang/data/repositories"
-	"isjhar/template/echo-golang/utils"
 	"time"
+
+	"github.com/isjhar/iet/data/repositories"
+	"github.com/isjhar/iet/utils"
 
 	"github.com/labstack/echo/v4"
 )

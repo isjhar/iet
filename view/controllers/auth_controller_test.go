@@ -3,13 +3,14 @@ package controllers
 import (
 	"encoding/json"
 	"io"
-	"isjhar/template/echo-golang/utils"
-	"isjhar/template/echo-golang/view/dto"
 	"log"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
+
+	"github.com/isjhar/iet/utils"
+	"github.com/isjhar/iet/view/dto"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"

@@ -3,10 +3,11 @@ package view
 
 import (
 	"errors"
-	"isjhar/template/echo-golang/domain/entities"
-	"isjhar/template/echo-golang/utils"
-	"isjhar/template/echo-golang/view/dto"
 	"net/http"
+
+	"github.com/isjhar/iet/domain/entities"
+	"github.com/isjhar/iet/utils"
+	"github.com/isjhar/iet/view/dto"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"

@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"isjhar/template/echo-golang/data/repositories"
 	"log"
 	"os"
+
+	"github.com/isjhar/iet/data/repositories"
 
 	"github.com/akamensky/argparse"
 	_ "github.com/golang-migrate/migrate/v4/source/file"

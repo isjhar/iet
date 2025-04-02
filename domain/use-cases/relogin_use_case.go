@@ -2,7 +2,8 @@ package usecases
 
 import (
 	"context"
-	"isjhar/template/echo-golang/domain/repositories"
+
+	"github.com/isjhar/iet/domain/repositories"
 )
 
 type ReloginUseCase struct {

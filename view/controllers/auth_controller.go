@@ -1,8 +1,9 @@
 package controllers
 
 import (
-	"isjhar/template/echo-golang/view/dto"
 	"net/http"
+
+	"github.com/isjhar/iet/view/dto"
 
 	"github.com/labstack/echo/v4"
 )

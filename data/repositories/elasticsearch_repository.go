@@ -5,11 +5,12 @@ import (
 	"context"
 	"encoding/json"
 	"io"
-	"isjhar/template/echo-golang/data/models"
-	"isjhar/template/echo-golang/domain/entities"
-	"isjhar/template/echo-golang/utils"
 	"net/http"
 	"time"
+
+	"github.com/isjhar/iet/data/models"
+	"github.com/isjhar/iet/domain/entities"
+	"github.com/isjhar/iet/utils"
 )
 
 type ElasticsearchRepository struct {

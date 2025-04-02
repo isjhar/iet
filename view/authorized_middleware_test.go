@@ -2,12 +2,13 @@ package view
 
 import (
 	"context"
-	"isjhar/template/echo-golang/data/repositories"
-	"isjhar/template/echo-golang/domain/entities"
-	usecases "isjhar/template/echo-golang/domain/use-cases"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/isjhar/iet/data/repositories"
+	"github.com/isjhar/iet/domain/entities"
+	usecases "github.com/isjhar/iet/domain/use-cases"
 
 	"github.com/labstack/echo/v4"
 	"gopkg.in/guregu/null.v4"

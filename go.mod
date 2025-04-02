@@ -1,4 +1,4 @@
-module isjhar/template/echo-golang
+module github.com/isjhar/iet
 
 go 1.21
 

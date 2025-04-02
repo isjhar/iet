@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"isjhar/template/echo-golang/view/controllers"
+	"github.com/isjhar/iet/view/controllers"
 
 	"github.com/labstack/echo/v4"
 )

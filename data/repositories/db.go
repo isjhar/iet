@@ -3,10 +3,11 @@ package repositories
 import (
 	"database/sql"
 	"fmt"
-	"isjhar/template/echo-golang/utils"
 	"log"
 	"strings"
 	"time"
+
+	"github.com/isjhar/iet/utils"
 
 	"gopkg.in/guregu/null.v4"
 	"gorm.io/gorm"

@@ -2,7 +2,8 @@ package repositories
 
 import (
 	"context"
-	"isjhar/template/echo-golang/domain/entities"
+
+	"github.com/isjhar/iet/domain/entities"
 )
 
 type UserRepository interface {

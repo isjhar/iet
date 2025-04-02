@@ -3,10 +3,11 @@ package utils
 import (
 	"bytes"
 	"io"
-	"isjhar/template/echo-golang/domain/entities"
 	"mime/multipart"
 	"net/http"
 	"path/filepath"
+
+	"github.com/isjhar/iet/domain/entities"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
