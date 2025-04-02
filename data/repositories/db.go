@@ -16,7 +16,7 @@ import (
 var DB *sql.DB
 var ORM *gorm.DB
 
-func init() {
+func ConnectDb() {
 	var err error
 	dataSourceName := GetDataSourceName()
 
