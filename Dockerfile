@@ -23,7 +23,7 @@ RUN sed -i -E "s/(([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)|localhost):[0-9]+/${HOST_IP}/
 RUN sed -i -E "s/(([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)|localhost):[0-9]+/${HOST_IP}/" docs/swagger.yaml
 
 RUN go get
-RUN go build -o dist
+RUN go build -o dist ./cmd/api-server
 RUN mkdir -p logs
 ENTRYPOINT ./dist
 EXPOSE 1323
