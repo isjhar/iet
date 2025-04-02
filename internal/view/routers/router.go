@@ -3,9 +3,9 @@ package routers
 import (
 	"net/http"
 
-	"github.com/isjhar/iet/data/repositories"
-	"github.com/isjhar/iet/view"
-	"github.com/isjhar/iet/view/dto"
+	"github.com/isjhar/iet/internal/data/repositories"
+	"github.com/isjhar/iet/internal/view"
+	"github.com/isjhar/iet/internal/view/dto"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"

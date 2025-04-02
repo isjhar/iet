@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/isjhar/iet/domain/entities"
+	"github.com/isjhar/iet/internal/domain/entities"
 	"github.com/isjhar/iet/utils"
 
 	"github.com/golang-migrate/migrate/v4"

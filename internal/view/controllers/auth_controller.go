@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/isjhar/iet/view/dto"
+	"github.com/isjhar/iet/internal/view/dto"
 
 	"github.com/labstack/echo/v4"
 )

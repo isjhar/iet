@@ -5,9 +5,9 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/isjhar/iet/domain/entities"
+	"github.com/isjhar/iet/internal/domain/entities"
+	"github.com/isjhar/iet/internal/view/dto"
 	"github.com/isjhar/iet/utils"
-	"github.com/isjhar/iet/view/dto"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"

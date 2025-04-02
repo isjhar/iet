@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"github.com/isjhar/iet/view/controllers"
+	"github.com/isjhar/iet/internal/view/controllers"
 
 	"github.com/labstack/echo/v4"
 )

@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/isjhar/iet/data/repositories"
+	"github.com/isjhar/iet/internal/data/repositories"
 
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )

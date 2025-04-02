@@ -3,8 +3,8 @@ package usecases
 import (
 	"context"
 
-	"github.com/isjhar/iet/domain/entities"
-	"github.com/isjhar/iet/domain/repositories"
+	"github.com/isjhar/iet/internal/domain/entities"
+	"github.com/isjhar/iet/internal/domain/repositories"
 )
 
 type LoginUseCase struct {

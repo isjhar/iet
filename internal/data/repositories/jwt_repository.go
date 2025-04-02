@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/isjhar/iet/domain/entities"
+	"github.com/isjhar/iet/internal/domain/entities"
 	"github.com/isjhar/iet/utils"
 
 	"github.com/golang-jwt/jwt"

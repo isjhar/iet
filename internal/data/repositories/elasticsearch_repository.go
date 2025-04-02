@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/isjhar/iet/data/models"
-	"github.com/isjhar/iet/domain/entities"
+	"github.com/isjhar/iet/internal/data/models"
+	"github.com/isjhar/iet/internal/domain/entities"
 	"github.com/isjhar/iet/utils"
 )
 

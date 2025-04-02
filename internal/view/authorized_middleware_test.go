@@ -6,9 +6,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/isjhar/iet/data/repositories"
-	"github.com/isjhar/iet/domain/entities"
-	usecases "github.com/isjhar/iet/domain/use-cases"
+	"github.com/isjhar/iet/internal/data/repositories"
+	"github.com/isjhar/iet/internal/domain/entities"
+	"github.com/isjhar/iet/internal/domain/usecases"
 
 	"github.com/labstack/echo/v4"
 	"gopkg.in/guregu/null.v4"

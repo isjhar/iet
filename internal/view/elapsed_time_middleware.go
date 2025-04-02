@@ -3,7 +3,7 @@ package view
 import (
 	"time"
 
-	"github.com/isjhar/iet/data/repositories"
+	"github.com/isjhar/iet/internal/data/repositories"
 	"github.com/isjhar/iet/utils"
 
 	"github.com/labstack/echo/v4"

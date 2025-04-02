@@ -3,7 +3,7 @@ package repositories
 import (
 	"context"
 
-	"github.com/isjhar/iet/domain/entities"
+	"github.com/isjhar/iet/internal/domain/entities"
 )
 
 type UserRepository interface {

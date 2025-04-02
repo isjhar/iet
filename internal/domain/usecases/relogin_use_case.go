@@ -3,30 +3,22 @@ package usecases
 import (
 	"context"
 
-	"github.com/isjhar/iet/domain/repositories"
+	"github.com/isjhar/iet/internal/domain/repositories"
 )
 
-type LoginJwtUseCase struct {
+type ReloginUseCase struct {
 	UserRepository repositories.UserRepository
 	JwtRepository  repositories.JwtRepository
 }
 
-type LoginJwtUseCaseParams struct {
-	Username string
-	Password string
-}
-
-type LoginJwtUseCaseResult struct {
-	AccessToken  string
-	RefreshToken string
-}
-
-func (r *LoginJwtUseCase) Execute(ctx context.Context, arg LoginJwtUseCaseParams) (LoginJwtUseCaseResult, error) {
+func (r *ReloginUseCase) Execute(ctx context.Context, refreshToken string) (LoginJwtUseCaseResult, error) {
 	var result LoginJwtUseCaseResult
-	loginUseCase := LoginUseCase{
-		UserRepository: r.UserRepository,
+	refereshTokenData, err := r.JwtRepository.GetData(refreshToken)
+	if err != nil {
+		return result, err
 	}
-	user, err := loginUseCase.Execute(ctx, LoginParams(arg))
+	username := refereshTokenData.(string)
+	user, err := r.UserRepository.Find(ctx, username)
 	if err != nil {
 		return result, err
 	}

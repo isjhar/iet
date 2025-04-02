@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/isjhar/iet/domain/entities"
+	"github.com/isjhar/iet/internal/domain/entities"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
