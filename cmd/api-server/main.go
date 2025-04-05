@@ -5,10 +5,11 @@ import (
 	"time"
 
 	"github.com/isjhar/iet/docs"
+	"github.com/isjhar/iet/internal/config"
 	"github.com/isjhar/iet/internal/data/repositories"
 	"github.com/isjhar/iet/internal/view"
 	"github.com/isjhar/iet/internal/view/routers"
-	"github.com/isjhar/iet/utils"
+	"github.com/isjhar/iet/pkg"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -23,39 +24,42 @@ import (
 // @in header
 // @name Authorization
 func main() {
-	docs.SwaggerInfo.Title = "Service API"
+
+	config.LoadConfig()
+
+	docs.SwaggerInfo.Title = config.Swagger.Title.String
 	docs.SwaggerInfo.Version = "1.0"
-	docs.SwaggerInfo.Host = utils.GetBaseUrl()
-	docs.SwaggerInfo.Schemes = []string{"https", "http"}
+	docs.SwaggerInfo.Host = pkg.GetBaseUrl()
+	docs.SwaggerInfo.Schemes = []string{config.Swagger.Scheme.String}
 
 	e := echo.New()
 	e.HideBanner = true
-	e.Validator = &utils.CustomValidator{
+	e.Validator = &pkg.CustomValidator{
 		Validator: validator.New(),
 	}
 	e.HTTPErrorHandler = view.CustomHTTPErrorHandler
 
 	buildMiddleware(e)
 
-	environment := utils.GetEnvironment()
+	environment := pkg.GetEnvironment()
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	switch environment {
-	case utils.LOCAL, utils.DEVELOPMENT:
-	case utils.PROD:
+	case pkg.LOCAL, pkg.DEVELOPMENT:
+	case pkg.PROD:
 		output := &repositories.ElasticsearchRepository{}
 		log.SetOutput(output)
 	default:
-		output := &utils.CustomLogger{}
+		output := &pkg.CustomLogger{}
 		log.SetOutput(output)
 	}
 
-	logLevel := utils.GetLogLevel()
-	if logLevel == utils.LogInfoLevel {
-		utils.LogLevel = utils.LogInfoLevel
-	} else if logLevel == utils.LogWarningLevel {
-		utils.LogLevel = utils.LogWarningLevel
-	} else if logLevel == utils.LogErrorLevel {
-		utils.LogLevel = utils.LogErrorLevel
+	logLevel := pkg.GetLogLevel()
+	if logLevel == pkg.LogInfoLevel {
+		pkg.LogLevel = pkg.LogInfoLevel
+	} else if logLevel == pkg.LogWarningLevel {
+		pkg.LogLevel = pkg.LogWarningLevel
+	} else if logLevel == pkg.LogErrorLevel {
+		pkg.LogLevel = pkg.LogErrorLevel
 	}
 
 	routers.Route(e)

@@ -8,9 +8,9 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/isjhar/iet/internal/config"
 	"github.com/isjhar/iet/internal/data/models"
 	"github.com/isjhar/iet/internal/domain/entities"
-	"github.com/isjhar/iet/utils"
 )
 
 type ElasticsearchRepository struct {
@@ -31,7 +31,7 @@ func (r *ElasticsearchRepository) Write(p []byte) (int, error) {
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
 		defer cancel()
 
-		category := utils.GetEnvironmentVariable("ELASTICSEARCH_CATEGORY", elasticsearchCategory)
+		category := config.Elasticsearch.Category.String
 		url := "/" + category + "/_doc"
 		req, err := r.NewRequest(ctx, http.MethodPost, url, bytes.NewBuffer(jsonValue))
 		if err != nil {
@@ -105,7 +105,7 @@ func (r ElasticsearchRepository) SendLog(body []byte) {
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
 		defer cancel()
 
-		category := utils.GetEnvironmentVariable("ELASTICSEARCH_CATEGORY", elasticsearchCategory)
+		category := config.Elasticsearch.Category.String
 		url := "/" + category + "/_doc"
 		req, err := r.NewRequest(ctx, http.MethodPost, url, bytes.NewBuffer(body))
 		if err != nil {
@@ -121,8 +121,8 @@ func (r ElasticsearchRepository) SendLog(body []byte) {
 }
 
 func (r ElasticsearchRepository) NewRequest(ctx context.Context, method string, path string, body io.Reader) (*http.Request, error) {
-	url := utils.GetEnvironmentVariable("ELASTICSEARCH_URL", elasticsearchUrl) + path
-	key := utils.GetEnvironmentVariable("ELASTICSEARCH_KEY", elasticsearchKey)
+	url := config.Elasticsearch.Url.String + path
+	key := config.Elasticsearch.Key.String
 
 	req, err := http.NewRequestWithContext(ctx, method, url, body)
 	if err != nil {

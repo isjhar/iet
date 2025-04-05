@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	"github.com/isjhar/iet/internal/view/dto"
-	"github.com/isjhar/iet/utils"
+	"github.com/isjhar/iet/pkg"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -24,7 +24,7 @@ func TestLogin_ReturnSuccess(t *testing.T) {
 	bodyJson, _ := json.Marshal(&body)
 
 	e := echo.New()
-	e.Validator = &utils.CustomValidator{
+	e.Validator = &pkg.CustomValidator{
 		Validator: validator.New(),
 	}
 	req := httptest.NewRequest(http.MethodPost, "/", strings.NewReader(string(bodyJson)))

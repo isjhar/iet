@@ -7,8 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/isjhar/iet/utils"
-
+	"github.com/isjhar/iet/internal/config"
 	"gopkg.in/guregu/null.v4"
 	"gorm.io/gorm"
 )
@@ -16,7 +15,7 @@ import (
 var DB *sql.DB
 var ORM *gorm.DB
 
-func ConnectDb() {
+func Connect() {
 	var err error
 	dataSourceName := GetDataSourceName()
 
@@ -34,11 +33,11 @@ func ConnectDb() {
 
 func GetDataSourceName() string {
 	return fmt.Sprintf("server=%s; port=%s; user id=%s; password=%s; database=%s;",
-		utils.GetEnvironmentVariable("DB_HOST", hostDefault),
-		utils.GetEnvironmentVariable("DB_PORT", portDefault),
-		utils.GetEnvironmentVariable("DB_USER", userDefault),
-		utils.GetEnvironmentVariable("DB_PASSWORD", passwordDefault),
-		utils.GetEnvironmentVariable("DB_NAME", databaseDefault),
+		config.Database.Host.String,
+		config.Database.Port.String,
+		config.Database.User.String,
+		config.Database.Password.String,
+		config.Database.Database.String,
 	)
 }
 

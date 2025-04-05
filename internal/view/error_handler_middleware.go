@@ -7,7 +7,7 @@ import (
 
 	"github.com/isjhar/iet/internal/domain/entities"
 	"github.com/isjhar/iet/internal/view/dto"
-	"github.com/isjhar/iet/utils"
+	"github.com/isjhar/iet/pkg"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -27,7 +27,7 @@ func CustomHTTPErrorHandler(err error, c echo.Context) {
 			statusCode = he.Code
 			msg = he.Message.(string)
 		} else if _, ok := err.(validator.ValidationErrors); ok {
-			utils.LogError("invalid params at [%s] url %s : %v", c.Request().Method, c.Request().URL.Path, err)
+			pkg.LogError("invalid params at [%s] url %s : %v", c.Request().Method, c.Request().URL.Path, err)
 			statusCode = http.StatusBadRequest
 			msg = entities.InvalidParams.Error()
 		} else if se, ok := err.(*entities.ServiceError); ok {

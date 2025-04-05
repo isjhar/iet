@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/isjhar/iet/internal/domain/entities"
-	"github.com/isjhar/iet/utils"
+	"github.com/isjhar/iet/pkg"
 
 	"github.com/golang-jwt/jwt"
 	"gopkg.in/guregu/null.v4"
@@ -60,5 +60,5 @@ func (r JwtRepository) getClaims(token string) (jwt.MapClaims, error) {
 }
 
 func (r JwtRepository) GetJwtSecret() string {
-	return utils.GetEnvironmentVariable("JWT_SECRET", jwtSecretDefault)
+	return pkg.GetEnvironmentVariable("JWT_SECRET", jwtSecretDefault)
 }

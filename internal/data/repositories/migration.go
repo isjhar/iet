@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/isjhar/iet/internal/config"
 	"github.com/isjhar/iet/internal/domain/entities"
-	"github.com/isjhar/iet/utils"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
@@ -125,6 +125,7 @@ func getMigrationPath() string {
 }
 
 func getMigrationFolderPath() string {
-	packagePath := utils.GetEnvironmentVariable("PACKAGE_PATH", packagePath)
+	packagePath := config.Migration.Path.String
+
 	return fmt.Sprintf("%s/data/repositories/migrations", packagePath)
 }

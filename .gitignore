@@ -35,3 +35,5 @@ build_notes.txt
 
 __debug_bin*
 dist
+
+config.json

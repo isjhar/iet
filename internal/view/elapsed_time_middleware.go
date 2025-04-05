@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/isjhar/iet/internal/data/repositories"
-	"github.com/isjhar/iet/utils"
+	"github.com/isjhar/iet/pkg"
 
 	"github.com/labstack/echo/v4"
 )
@@ -27,7 +27,7 @@ func ElapsedTimeMiddleware() echo.MiddlewareFunc {
 			// Calculate elapsed time
 			elapsed := time.Since(start)
 
-			utils.LogInfo("url=%s status_code=%d duration=%d", c.Request().URL.Path, c.Response().Status, elapsed.Milliseconds())
+			pkg.LogInfo("url=%s status_code=%d duration=%d", c.Request().URL.Path, c.Response().Status, elapsed.Milliseconds())
 
 			elasticSearch.LogApi(repositories.LogApiParams{
 				Path:       c.Request().URL.Path,
