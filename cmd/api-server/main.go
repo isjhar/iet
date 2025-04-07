@@ -4,9 +4,9 @@ import (
 	"log"
 	"time"
 
-	"github.com/isjhar/iet/docs"
 	"github.com/isjhar/iet/internal/config"
 	"github.com/isjhar/iet/internal/data/repositories"
+	"github.com/isjhar/iet/internal/docs"
 	"github.com/isjhar/iet/internal/view"
 	"github.com/isjhar/iet/internal/view/routers"
 	"github.com/isjhar/iet/pkg"
