@@ -1,9 +1,28 @@
+definitions:
+  dto.ApiResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+    type: object
 info:
   contact: {}
   description: Service API.
   title: Service API
   version: "1.0"
-paths: {}
+paths:
+  /health:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ApiResponse'
+      summary: Check server health
+      tags:
+      - Health
 securityDefinitions:
   ApiKeyAuth:
     in: header

@@ -28,6 +28,12 @@ func publicRoute(e *echo.Echo) {
 	AuthRouter(public)
 }
 
+// health godoc
+// @Summary      Check server health
+// @Tags         Health
+// @Produce      json
+// @Success      200  {object}  dto.ApiResponse
+// @Router       /health [get]
 func health(c echo.Context) error {
 	return c.JSON(http.StatusOK, dto.ApiResponse{
 		Message: "still alive",
