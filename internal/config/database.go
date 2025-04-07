@@ -1,7 +1,6 @@
 package config
 
 import (
-	"github.com/isjhar/iet/pkg"
 	"gopkg.in/guregu/null.v4"
 )
 
@@ -16,9 +15,9 @@ type database struct {
 }
 
 func (i *database) LoadFromEnvironment() {
-	i.Host = null.StringFrom(pkg.GetEnvironmentVariable("DB_HOST", ""))
-	i.Port = null.StringFrom(pkg.GetEnvironmentVariable("DB_PORT", ""))
-	i.User = null.StringFrom(pkg.GetEnvironmentVariable("DB_USER", ""))
-	i.Password = null.StringFrom(pkg.GetEnvironmentVariable("DB_PASSWORD", ""))
-	i.Database = null.StringFrom(pkg.GetEnvironmentVariable("DB_NAME", ""))
+	replaceWithEnvVariableString(&i.Host, "DB_HOST")
+	replaceWithEnvVariableString(&i.Port, "DB_PORT")
+	replaceWithEnvVariableString(&i.User, "DB_USER")
+	replaceWithEnvVariableString(&i.Password, "DB_PASSWORD")
+	replaceWithEnvVariableString(&i.Database, "DB_NAME")
 }

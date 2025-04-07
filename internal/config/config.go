@@ -3,6 +3,9 @@ package config
 import (
 	"encoding/json"
 	"os"
+
+	"github.com/isjhar/iet/pkg"
+	"gopkg.in/guregu/null.v4"
 )
 
 type config struct {
@@ -36,4 +39,11 @@ func loadFromJson() (config, error) {
 		return cfg, err
 	}
 	return cfg, nil
+}
+
+func replaceWithEnvVariableString(configValue *null.String, envKey string) {
+	title := pkg.GetEnvironmentVariable(envKey, "")
+	if title != "" {
+		*configValue = null.StringFrom(title)
+	}
 }

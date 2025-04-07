@@ -1,7 +1,6 @@
 package config
 
 import (
-	"github.com/isjhar/iet/pkg"
 	"gopkg.in/guregu/null.v4"
 )
 
@@ -14,7 +13,7 @@ type elasticsearch struct {
 }
 
 func (i *elasticsearch) LoadFromEnvironment() {
-	i.Url = null.StringFrom(pkg.GetEnvironmentVariable("ELASTICSEARCH_URL", ""))
-	i.Key = null.StringFrom(pkg.GetEnvironmentVariable("ELASTICSEARCH_KEY", ""))
-	i.Category = null.StringFrom(pkg.GetEnvironmentVariable("ELASTICSEARCH_CATEGORY", ""))
+	replaceWithEnvVariableString(&i.Url, "ELASTICSEARCH_URL")
+	replaceWithEnvVariableString(&i.Key, "ELASTICSEARCH_KEY")
+	replaceWithEnvVariableString(&i.Category, "ELASTICSEARCH_CATEGORY")
 }

@@ -1,7 +1,6 @@
 package config
 
 import (
-	"github.com/isjhar/iet/pkg"
 	"gopkg.in/guregu/null.v4"
 )
 
@@ -12,5 +11,5 @@ type migration struct {
 }
 
 func (i *migration) LoadFromEnvironment() {
-	i.Path = null.StringFrom(pkg.GetEnvironmentVariable("PACKAGE_PATH", ""))
+	replaceWithEnvVariableString(&i.Path, "PACKAGE_PATH")
 }

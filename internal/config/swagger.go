@@ -1,7 +1,6 @@
 package config
 
 import (
-	"github.com/isjhar/iet/pkg"
 	"gopkg.in/guregu/null.v4"
 )
 
@@ -13,6 +12,6 @@ type swagger struct {
 }
 
 func (i *swagger) LoadFromEnvironment() {
-	i.Title = null.StringFrom(pkg.GetEnvironmentVariable("SWAGGER_TITLE", ""))
-	i.Scheme = null.StringFrom(pkg.GetEnvironmentVariable("SCHEME", ""))
+	replaceWithEnvVariableString(&i.Title, "SWAGGER_TITTLE")
+	replaceWithEnvVariableString(&i.Scheme, "SCHEME")
 }
