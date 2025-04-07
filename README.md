@@ -3,7 +3,7 @@
 - echo framework
 - swagger
 - validator
-- jwt
+- jwt auth
 - file logger
 - database migration
 
