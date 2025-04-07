@@ -9,15 +9,32 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 func Route(e *echo.Echo) {
+	publicRoute(e)
+	privateRoute(e)
+}
+
+func publicRoute(e *echo.Echo) {
 	public := e.Group("")
 	public.GET("/health", health)
 	public.OPTIONS("/health", health)
 
-	AuthRouter(public)
+	e.GET("/docs*", echoSwagger.WrapHandler)
 
+	AuthRouter(public)
+}
+
+func health(c echo.Context) error {
+	return c.JSON(http.StatusOK, dto.ApiResponse{
+		Message: "still alive",
+	})
+}
+
+func privateRoute(e *echo.Echo) {
 	jwtRepository := repositories.JwtRepository{}
 
 	private := e.Group("")
@@ -26,10 +43,4 @@ func Route(e *echo.Echo) {
 		SigningMethod: "HS512",
 	}))
 	private.Use(view.AuthorizedUser("header"))
-}
-
-func health(c echo.Context) error {
-	return c.JSON(http.StatusOK, dto.ApiResponse{
-		Message: "still alive",
-	})
 }
