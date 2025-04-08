@@ -5,12 +5,11 @@ import (
 
 	"github.com/isjhar/iet/internal/domain/entities"
 	"github.com/isjhar/iet/internal/domain/repositories"
-
-	"gopkg.in/guregu/null.v4"
 )
 
 type GeneratePairTokenUseCase struct {
-	JwtRepository repositories.JwtRepository
+	JwtRepository      repositories.JwtRepository
+	JwtStoreRepository repositories.JwtStoreRepository
 }
 
 type GeneratePairTokenUseCaseResult struct {
@@ -20,16 +19,21 @@ type GeneratePairTokenUseCaseResult struct {
 
 func (r *GeneratePairTokenUseCase) Execute(ctx context.Context, user entities.User) (GeneratePairTokenUseCaseResult, error) {
 	var result GeneratePairTokenUseCaseResult
-	accessTokenPayload := make(map[string]interface{})
-	accessTokenPayload["id"] = user.ID
-	accessTokenPayload["username"] = user.Username
-	accessTokenPayload["name"] = user.Name
-	accessToken, err := r.JwtRepository.GenerateToken(accessTokenPayload, null.IntFrom(60))
+	accessTokenPayload := r.createPayload(user)
+	accessToken, err := r.JwtRepository.GenerateToken(accessTokenPayload)
 	if err != nil {
 		return result, err
 	}
 
-	refresToken, err := r.JwtRepository.GenerateToken(user.Username, null.NewInt(0, false))
+	refresToken, err := r.JwtRepository.GenerateRefreshToken()
+	if err != nil {
+		return result, err
+	}
+
+	err = r.JwtStoreRepository.StoreRefreshToken(ctx, repositories.StoreRefreshTokenParams{
+		Token:     refresToken,
+		SessionID: user.Username,
+	})
 	if err != nil {
 		return result, err
 	}
@@ -37,4 +41,12 @@ func (r *GeneratePairTokenUseCase) Execute(ctx context.Context, user entities.Us
 	result.AccessToken = accessToken
 	result.RefreshToken = refresToken
 	return result, err
+}
+
+func (r *GeneratePairTokenUseCase) createPayload(user entities.User) map[string]any {
+	accessTokenPayload := make(map[string]any)
+	accessTokenPayload["id"] = user.ID
+	accessTokenPayload["username"] = user.Username
+	accessTokenPayload["name"] = user.Name
+	return accessTokenPayload
 }

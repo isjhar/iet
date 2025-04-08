@@ -1,33 +1,28 @@
 package repositories
 
 import (
-	"log"
+	"crypto/rand"
+	"encoding/base64"
 	"time"
 
-	"github.com/isjhar/iet/internal/domain/entities"
-	"github.com/isjhar/iet/pkg"
-
 	"github.com/golang-jwt/jwt"
-	"gopkg.in/guregu/null.v4"
+	"github.com/isjhar/iet/internal/config"
+	"github.com/isjhar/iet/internal/domain/entities"
 )
 
-const jwtSecretDefault string = "JWT-SECRET"
 const dataKey string = "data"
 
 type JwtRepository struct {
 }
 
-func (r JwtRepository) GenerateToken(data interface{}, expMinutes null.Int) (string, error) {
+func (r JwtRepository) GenerateToken(data interface{}) (string, error) {
 	plainToken := jwt.New(jwt.SigningMethodHS512)
 	claims := plainToken.Claims.(jwt.MapClaims)
 	claims[dataKey] = data
-	if expMinutes.Valid {
-		claims["exp"] = time.Now().Add(time.Minute * time.Duration(expMinutes.Int64)).Unix()
-	}
+	claims["exp"] = time.Now().Add(time.Second * time.Duration(config.Jwt.AccessTokenExpiresIn.Int64)).Unix()
 
 	securedToken, err := plainToken.SignedString([]byte(r.GetJwtSecret()))
 	if err != nil {
-		log.Printf("error sign token: %v", err)
 		return "", entities.InternalServerError
 	}
 
@@ -53,12 +48,25 @@ func (r JwtRepository) getClaims(token string) (jwt.MapClaims, error) {
 		return []byte(r.GetJwtSecret()), nil
 	})
 	if err != nil {
-		log.Printf("error validate token: %v", err)
-		return nil, entities.InternalServerError
+		return nil, entities.ErrorUnauthorized
 	}
 	return claims, nil
 }
 
 func (r JwtRepository) GetJwtSecret() string {
-	return pkg.GetEnvironmentVariable("JWT_SECRET", jwtSecretDefault)
+	return config.Jwt.Secret.String
+}
+
+func (r JwtRepository) GenerateRefreshToken() (string, error) {
+	return r.GenerateOpaqueToken(64)
+}
+
+func (r JwtRepository) GenerateOpaqueToken(size int) (string, error) {
+	bytes := make([]byte, size)
+	_, err := rand.Read(bytes)
+	if err != nil {
+		return "", err
+	}
+	token := base64.URLEncoding.WithPadding(base64.NoPadding).EncodeToString(bytes)
+	return token, nil
 }
