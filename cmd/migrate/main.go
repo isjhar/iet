@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/isjhar/iet/internal/config"
 	"github.com/isjhar/iet/internal/data/repositories"
 
 	"github.com/akamensky/argparse"
@@ -24,6 +25,8 @@ func main() {
 		fmt.Print(parser.Usage(err))
 		return
 	}
+	config.LoadConfig()
+	repositories.Connect()
 	// Finally print the collected string
 	mode := *modePointer
 	switch mode {
