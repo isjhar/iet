@@ -285,7 +285,7 @@ type {{.StructName}} struct {
 }
 
 func ({{.StructName}}) TableName() string {
-	return "{{.SnackCaseModelName}}_detail"
+	return "{{.SnackCaseModelName}}"
 }
 
 type {{.StructNames}} []{{.StructName}}
