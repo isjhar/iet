@@ -7,9 +7,10 @@ type GetUseCaseParams struct {
 	Offset null.Int
 	Sort   null.String
 	Order  null.String
-	CountUseCaseParams
+	FilterUseCaseParams
 }
 
-type CountUseCaseParams struct {
+type FilterUseCaseParams struct {
 	Search null.String
+	ID     null.Int
 }
