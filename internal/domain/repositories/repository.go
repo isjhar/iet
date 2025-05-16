@@ -17,9 +17,11 @@ type GetParams struct {
 	Offset null.Int
 	Sort   null.String
 	Order  null.String
-	CountParams
+	FilterParams
 }
 
-type CountParams struct {
+type FilterParams struct {
 	Search null.String
+	ID     null.Int
+	OIDs   []int64
 }
