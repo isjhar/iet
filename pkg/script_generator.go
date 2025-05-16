@@ -132,6 +132,12 @@ func (te *templateWriter) write() error {
 		return err
 	}
 
+	err = te.writeTemplateToFileIfNotExist(controllerScripteTemplate,
+		te.RootPath+"/internal/view/controllers/controller.go")
+	if err != nil {
+		return err
+	}
+
 	err = te.appendTemplateToFile(repositoryDefinitionScriptTemplate,
 		te.RootPath+"/internal/view/controllers/controller.go")
 	if err != nil {
@@ -153,6 +159,33 @@ func (te *templateWriter) writeTemplateToFile(templateName string, filename stri
 	if err != nil {
 		LogError("error parsing template: %v", err)
 		return err
+	}
+
+	file, err := os.Create(filename)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	err = t.Execute(file, te.Data)
+	if err != nil {
+		LogError("error executing template: %v", err)
+		return err
+	}
+	return err
+}
+
+func (te *templateWriter) writeTemplateToFileIfNotExist(templateName string, filename string) error {
+	var err error
+	t, err := template.New("template").Parse(templateName)
+	if err != nil {
+		LogError("error parsing template: %v", err)
+		return err
+	}
+
+	_, err = os.Stat(filename)
+	if err == nil {
+		return nil
 	}
 
 	file, err := os.Create(filename)
@@ -602,6 +635,15 @@ func {{.StructName}}Route(api *echo.Group) {
 	api.OPTIONS("{{.KebabCaseModelNames}}", controllers.Get{{.StructNames}}())
 	api.GET("{{.KebabCaseModelNames}}", controllers.Get{{.StructNames}}())
 }
+`
+
+const controllerScripteTemplate = `
+package controllers
+
+import (
+	"github.com/isjhar/iet/internal/data/repositories"
+	"github.com/isjhar/iet/internal/domain/usecases"
+)
 `
 
 const repositoryDefinitionScriptTemplate = `
