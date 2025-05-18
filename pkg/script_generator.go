@@ -479,13 +479,15 @@ type Get{{.StructNames}}UseCaseResult struct {
 func (i *Get{{.StructNames}}UseCase) Execute(ctx context.Context, arg Get{{.StructNames}}UseCaseParams) (Get{{.StructNames}}UseCaseResult, error) {
 	var result Get{{.StructNames}}UseCaseResult
 
-	filterParams := repositories.Filter{{.StructName}}Params{}
+	filter{{.StructName}}Params := repositories.Filter{{.StructName}}Params{}
+	filterParams := repositories.FilterParams{
+		Search: arg.Search,
+		ID:     arg.ID,
+	}
 
 	count, err := i.{{.StructName}}Repository.Count(ctx, repositories.Count{{.StructNames}}Params{
-		FilterParams: repositories.FilterParams{
-			Search: arg.Search,
-		},
-		Filter{{.StructName}}Params: filterParams,
+		FilterParams: filterParams,
+		Filter{{.StructName}}Params: filter{{.StructName}}Params,
 	})
 	if err != nil {
 		return result, err
@@ -502,12 +504,9 @@ func (i *Get{{.StructNames}}UseCase) Execute(ctx context.Context, arg Get{{.Stru
 			Offset: arg.Offset,
 			Sort:   arg.Sort,
 			Order:  arg.Order,
-			FilterParams: repositories.FilterParams{
-				Search: arg.Search,
-				ID:     arg.ID,
-			},
+			FilterParams: filterParams,
 		},
-		Filter{{.StructName}}Params: filterParams,
+		Filter{{.StructName}}Params: filter{{.StructName}}Params,
 	})
 	if err != nil {
 		return result, err
@@ -632,8 +631,8 @@ import (
 )
 
 func {{.StructName}}Route(api *echo.Group) {
-	api.OPTIONS("{{.KebabCaseModelNames}}", controllers.Get{{.StructNames}}())
-	api.GET("{{.KebabCaseModelNames}}", controllers.Get{{.StructNames}}())
+	api.OPTIONS("/{{.KebabCaseModelNames}}", controllers.Get{{.StructNames}}())
+	api.GET("/{{.KebabCaseModelNames}}", controllers.Get{{.StructNames}}())
 }
 `
 
